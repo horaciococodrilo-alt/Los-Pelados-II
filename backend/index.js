@@ -1,11 +1,10 @@
-// ===== LOS PELADOS II - Backend con SoqueTIC =====
+
 
 import { startServer, subscribeGETEvent, subscribePOSTEvent } from "soquetic";
 import fs from "fs";
 
-// Helpers para leer / escribir JSON en ../data
 function leerJson(nombreArchivo) {
-  // estoy en backend/, data está al lado de backend => ../data
+
   const texto = fs.readFileSync("../data/" + nombreArchivo, "utf8");
   return JSON.parse(texto);
 }
@@ -15,7 +14,6 @@ function guardarJson(nombreArchivo, data) {
   fs.writeFileSync("../data/" + nombreArchivo, texto, "utf8");
 }
 
-// ========== GET "sabores" ==========
 subscribeGETEvent("sabores", () => {
   try {
     const sabores = leerJson("sabores.json");
@@ -26,7 +24,6 @@ subscribeGETEvent("sabores", () => {
   }
 });
 
-// ========== GET "productos" ==========
 subscribeGETEvent("productos", () => {
   try {
     const productos = leerJson("productos.json");
@@ -37,10 +34,9 @@ subscribeGETEvent("productos", () => {
   }
 });
 
-// ========== POST "pedido" ==========
 subscribePOSTEvent("pedido", (data) => {
   try {
-    const listaPedidos = leerJson("pedidos.json"); // array
+    const listaPedidos = leerJson("pedidos.json"); 
     listaPedidos.push(data);
     guardarJson("pedidos.json", listaPedidos);
 
@@ -52,6 +48,5 @@ subscribePOSTEvent("pedido", (data) => {
   }
 });
 
-// ========== INICIAR SERVIDOR ==========
 startServer(3000, false);
 console.log("Servidor LOS PELADOS II escuchando en puerto 3000");
